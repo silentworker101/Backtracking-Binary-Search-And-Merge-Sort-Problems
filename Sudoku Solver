@@ -1,0 +1,121 @@
+***///
+
+#include<bits/stdc++.h>
+using namespace std; 
+  
+// UNASSIGNED is used for empty cells in sudoku board  
+#define UNASSIGNED 0  
+  
+// N is used for the size of Sudoku board.  
+// Size will be NxN  
+#define N 9  
+  
+// This function finds an entry in board  
+// that is still unassigned  
+bool FindUnassignedLocation(int board[N][N],  
+                            int &row, int &col);  
+  
+// Checks whether it will be legal  
+// to assign num to the given row, col  
+bool isSafe(int board[N][N], int row, 
+                   int col, int num);  
+
+bool sudokuSolver(int board[][9]){
+
+  /* Don't write main().
+   *  Don't read input, it is passed as function argument.
+   *  Don't print output and return output as specified in the question
+  */
+ int row, col;  
+  
+    // If there is no unassigned location, 
+    // we are done  
+    if (!FindUnassignedLocation (board, row, col))
+    return true; // success!  
+  
+    // consider digits 1 to 9  
+    for (int num = 1; num <= 9; num++)  
+    {  
+        // if looks promising  
+        if (isSafe (board, row, col, num)) 
+        {  
+            // make tentative assignment  
+         board[row][col] = num;  
+  
+            // return, if success, yay!  
+            if (sudokuSolver (board))  
+                return true;  
+  
+            // failure, unmake & try again  
+         board[row][col] = UNASSIGNED;  
+        }  
+    }  
+    return false; // this triggers backtracking  
+
+}
+
+bool FindUnassignedLocation(int board[N][N],  
+                            int &row, int &col)  
+{  
+    for (row = 0; row < N; row++)  
+        for (col = 0; col < N; col++)  
+            if ( board[row][col] == UNASSIGNED)  
+                return true;  
+    return false;  
+}  
+  
+/* Returns a boolean which indicates whether  
+an assigned entry in the specified row matches 
+the given number. */
+bool UsedInRow(int board[N][N], int row, int num)  
+{  
+    for (int col = 0; col < N; col++)  
+        if  (board[row][col] == num)  
+            return true;  
+    return false;  
+}  
+
+bool UsedInCol(int board[N][N], int col, int num)  
+{  
+    for (int row = 0; row < N; row++)  
+        if ( board[row][col] == num)  
+            return true;  
+    return false;  
+}  
+  
+/* Returns a boolean which indicates whether  
+an assigned entry within the specified 3x3 box  
+matches the given number. */
+bool UsedInBox(int board[N][N], int boxStartRow, 
+               int boxStartCol, int num)  
+{  
+   for (int row = 0; row < 3; row++)  
+        for (int col = 0; col < 3; col++)  
+            if (board[row + boxStartRow] 
+                    [col + boxStartCol] == num)  
+                return true;  
+    return false; 
+}  
+
+bool isSafe(int board[N][N], int row,  
+                   int col, int num)  
+{  
+    /* Check if 'num' is not already placed in  
+    current row, current column and current 3x3 box */
+   return !UsedInRow(board, row, num) &&  
+           !UsedInCol(board, col, num) &&  
+           !UsedInBox(board, row - row % 3 ,  
+                      col - col % 3, num) &&  
+            board[row][col] == UNASSIGNED; 
+}  
+  
+/* A utility function to print board */
+void printGrid(int board[N][N])  
+{  
+    for (int row = 0; row < N; row++)  
+    {  
+    for (int col = 0; col < N; col++)  
+            cout << board[row][col] << " ";  
+        cout << endl; 
+    }  
+}  
