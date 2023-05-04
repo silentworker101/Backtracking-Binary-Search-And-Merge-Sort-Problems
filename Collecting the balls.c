@@ -1,4 +1,4 @@
-***///
+//
 There are ‘n’ number of balls in a container. Mr. Sharma and Singh want to take balls out from the container. At each step, Mr. Sharma took ‘k’ balls out of the box and Mr. Singh took one-tenth of the remaining balls. Suppose there are 29 balls at the moment and k=4. Then, Mr. Sharma will take 4 balls and Mr. Singh will take 2 balls (29-4 = 25; 25/10 = 2). If there are less than ‘k’ balls remaining at some moment, then Mr. Sharma will take all the balls which will get the container empty. The process will last until the container becomes empty. Your task is to choose minimal ‘k’ for Mr. Sharma such that Mr. Sharma will take at least half of the balls from the container.
 Input Format:
 The Only line of input contains a single integer ‘n’.
@@ -22,7 +22,7 @@ Explanation:
 …..
 6-3 = 3; 3/10 = 0; 3-0 = 3
 3-3 = 0; 0/10 = 0; 0-0 = 0
-***///
+//
 
 
 
